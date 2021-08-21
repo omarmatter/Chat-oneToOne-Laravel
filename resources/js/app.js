@@ -3,6 +3,37 @@ require('./bootstrap');
 require('alpinejs');
 const list = document.querySelector('#chat');
 const userlist= document.querySelector('#users');
+
+(function($) {
+    $('#chat-form').on('submit', function(event) {
+        event.preventDefault();
+        $.post($(this).attr('action'), $(this).serialize(), function(res) {
+            $('#text').val('');
+            const message= document.createElement('li');
+            var today = new Date();
+
+            var time = today.getHours() + ":" + today.getMinutes() ;
+
+            message.innerHTML=`  <li class="me">
+            <div class="entete">
+                <h3>${time}</h3>
+
+                <span class="status blue"></span>
+            </div>
+            <div class="triangle"></div>
+            <div class="message">
+                ${res}
+            </div>
+        </li>`
+
+        list.appendChild(message)
+
+
+        })
+    });
+
+
+})(jQuery);
 const chat0 = window.Echo.join(`chat`)
     .here((users) => {
 
@@ -11,15 +42,32 @@ const chat0 = window.Echo.join(`chat`)
 
              user.innerHTML=` <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
              <div>
+               <a href= chat/${users[i].id} >
                  <h2>${users[i].name}</h2>
                  <h3>
                      <span class="status orange"></span>
                      online
                  </h3>
+                 </a>
              </div>`
           userlist.appendChild(user );
          }
-         });
+         }).joining((user) => {
+            const useritem = document.createElement('li');
+
+            useritem.innerHTML=` <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
+             <div>
+               <a href= chat/${user.id} >
+                 <h2>${user.name}</h2>
+                 <h3>
+                     <span class="status orange"></span>
+                     online
+                 </h3>
+                 </a>
+             </div>`
+          userlist.appendChild(user );
+
+        })
 
 
 const chat = window.Echo.join(`chat.${userId}`)
@@ -30,18 +78,19 @@ const chat = window.Echo.join(`chat.${userId}`)
     })
     .joining((user) => {
 
+
     })
     .leaving((user) => {
 
     })
     .listen('ChatMessage', (event) => {
         const ma= document.createElement('li')
-
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() ;
         ma.innerHTML=` <li class="you">
         <div class="entete">
             <span class="status green"></span>
-            <h2>Vincent</h2>
-            <h3>10:12AM, Today</h3>
+            <h3>${time}</h3>
         </div>
         <div class="triangle"></div>
         <div class="message">
@@ -50,4 +99,7 @@ const chat = window.Echo.join(`chat.${userId}`)
     </li>`
 list.appendChild( ma);
     })
+
+
+
 

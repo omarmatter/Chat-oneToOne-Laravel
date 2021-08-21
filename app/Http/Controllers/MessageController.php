@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Events\ChatMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
@@ -20,10 +21,15 @@ public function index(){
 public function store(Request $request){
 
 
-  broadcast(new ChatMessage($request->message,'1'));
+  broadcast(new ChatMessage($request->message,$request->messageTo));
 
-  return redirect()->back();
+  return response()->json($request->message);
 
+}
+public function show($id){
+  return view('message' ,[
+      'user'=> User::findOrFail($id)
+  ]);
 }
 
 }
