@@ -14,10 +14,11 @@ const userlist= document.querySelector('#users');
 
             var time = today.getHours() + ":" + today.getMinutes() ;
 
-            message.innerHTML=`  <li class="me">
+            message.innerHTML=
+            `  <li class="me">
             <div class="entete">
                 <h3>${time}</h3>
-
+                <h2>You</h2>
                 <span class="status blue"></span>
             </div>
             <div class="triangle"></div>
@@ -42,7 +43,7 @@ const chat0 = window.Echo.join(`chat`)
 
              user.innerHTML=` <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
              <div>
-               <a href= chat/${users[i].id} >
+               <a href=  /chat/${users[i].id} >
                  <h2>${users[i].name}</h2>
                  <h3 id= id${users[i].id}>
                      <span class="status green"></span>
