@@ -10,6 +10,7 @@
 <body>
     <div id="container">
         <aside>
+            <h3 style="margin:20px 10px ; color:white">{{ Auth::user()->name }}</h1>
             <header>
                 <input type="text" placeholder="search">
             </header>

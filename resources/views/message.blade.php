@@ -7,22 +7,20 @@
         <h2>{{ $user->name }}</h2>
 
     </div>
-    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="">
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+
+        <x-dropdown-link :href="route('logout')"
+                onclick="event.preventDefault();
+                            this.closest('form').submit();">
+            {{ __('Log Out') }}
+        </x-dropdown-link>
+    </form>
 </header>
 <ul id="chat">
 
 
-    {{-- <li class="me">
-        <div class="entete">
-            <h3>10:12AM, Today</h3>
-            <h2>Vincent</h2>
-            <span class="status blue"></span>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-            OK
-        </div>
-    </li> --}}
+
 </ul>
 <footer>
     <form method="POST" action="{{ route('chat') }}" id="chat-form">
