@@ -44,8 +44,8 @@ const chat0 = window.Echo.join(`chat`)
              <div>
                <a href= chat/${users[i].id} >
                  <h2>${users[i].name}</h2>
-                 <h3>
-                     <span class="status orange"></span>
+                 <h3 id= id${users[i].id}>
+                     <span class="status green"></span>
                      online
                  </h3>
                  </a>
@@ -53,20 +53,30 @@ const chat0 = window.Echo.join(`chat`)
           userlist.appendChild(user );
          }
          }).joining((user) => {
-            const useritem = document.createElement('li');
+            const item = document.querySelector(`#id${user.id}`)
+            if(item != null){
+            item.innerHTML=`  <span class="status green"></span>
+            online`
+            }else{
+                const useritem = document.createElement('li');
 
-            useritem.innerHTML=` <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
-             <div>
-               <a href= chat/${user.id} >
-                 <h2>${user.name}</h2>
-                 <h3>
-                     <span class="status orange"></span>
-                     online
-                 </h3>
-                 </a>
-             </div>`
-          userlist.appendChild(useritem );
+                useritem.innerHTML=` <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
+                 <div>
+                   <a href= chat/${user.id} >
+                     <h2>${user.name}</h2>
+                     <h3 id= id${user.id}>
+                         <span class="status green"></span>
+                         online
+                     </h3>
+                     </a>
+                 </div>`
+              userlist.appendChild(useritem );
+            }
 
+        })  .leaving((user) => {
+               const item = document.querySelector(`#id${user.id}`)
+               item.innerHTML=`  <span class="status orange"></span>
+               offline`
         })
 
 
