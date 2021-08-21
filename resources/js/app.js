@@ -65,7 +65,7 @@ const chat0 = window.Echo.join(`chat`)
                  </h3>
                  </a>
              </div>`
-          userlist.appendChild(user );
+          userlist.appendChild(useritem );
 
         })
 
